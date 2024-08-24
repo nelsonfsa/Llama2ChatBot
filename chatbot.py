@@ -2,8 +2,6 @@ from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 import json
 
-with open('all-tom-msg.txt', 'r') as f:
-    messages = f.read()
 
 template = """
 Answer the question below.
@@ -21,6 +19,7 @@ prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
 def get_data():
+
     context = ""
     #Load messages
     with open('messages.json', 'r') as f:
@@ -44,7 +43,7 @@ def handle_conversation():
         if user_input == "exit":
             break
 
-        result = chain.invoke({"context" : context, "messages" : messages, "question" : user_input})
+        result = chain.invoke({"context" : context, "question" : user_input})
         print("Ollama: ", result)
         context += f"\nUser: {user_input}\nAI: {result}"
 
